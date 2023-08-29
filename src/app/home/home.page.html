@@ -1,20 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title class="ion-text-center" size="large">Tasklist</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-toolbar class="ion-text-center" color="default">
+  <ion-button (click)="addTask()" color="tertiary" fill="clear"> Adicionar </ion-button>
+  <ion-button (click)="editTask()" color="tertiary" fill="clear"> Editar </ion-button>
+  <ion-button (click)="deleteTask()" color="tertiary" fill="clear"> Deletar </ion-button>
+  <ion-button (click)="concludeTask()" color="tertiary" fill="clear"> Concluir </ion-button>
+</ion-toolbar>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content color="default" [fullscreen]="true">
+
+  <ion-list>
+
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    
+  </ion-list>
+
 </ion-content>
