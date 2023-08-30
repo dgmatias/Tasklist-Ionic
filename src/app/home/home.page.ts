@@ -3,6 +3,8 @@ import { AddService } from '../services/add-service';
 import { EditService } from '../services/edit-service';
 import { DeleteService } from '../services/delete-service';
 import { ConcludeService } from '../services/conclude-service';
+import { AlertController } from '@ionic/angular';
+import { TaskModel } from '../models/task-model';
 
 @Component({
   selector: 'app-home',
@@ -11,10 +13,40 @@ import { ConcludeService } from '../services/conclude-service';
 })
 export class HomePage {
 
-  constructor(private addService: AddService, private editService: EditService, private deleteService: DeleteService, private concludeService: ConcludeService) {}
+  constructor(private addService: AddService, private editService: EditService, private deleteService: DeleteService, private concludeService: ConcludeService, private alertControler: AlertController) {}
 
-  addTask() {
-    this.addService.add();
+  tasks: TaskModel[] = []
+
+
+  async showAlert() {
+
+    const ALERT = await this.alertControler.create({
+      header: "Adicionar tarefa",
+      inputs: [
+                {
+                  name: "task",
+                  type: "text",
+                  checked: true,
+                  placeholder: "Digite o nome da tarefa",
+                }
+              ],
+      buttons: [
+                {
+                 text: "Adicionar",
+                 handler: (form)=>{
+                                    if(form.task) {
+                                      this.tasks.push(this.addService.add(form.task));
+                                      console.log("Valor válido");
+                                    } else {
+                                      console.log("Valor inválido");
+                                    }
+                                  } 
+                }
+               ]
+    })
+
+    ALERT.present();
+
   }
 
   editTask() {

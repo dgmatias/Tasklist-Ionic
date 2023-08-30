@@ -1,7 +1,10 @@
+import { TaskModel } from "../models/task-model";
+
 export class AddService {
     
-    add() {
-        console.log("Tarefa adicionada");
+    add(name: string, status = false):TaskModel {
+        let data = {name: name, status: status};
+        return data
     }
 
 }
