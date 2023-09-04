@@ -35,7 +35,8 @@ export class HomePage {
                  text: "Adicionar",
                  handler: (form)=>{
                                     if(form.task) {
-                                      this.tasks.push(this.addService.add(form.task));
+                                      let obj = {id: this.tasks.length , name: form.task, status: false};
+                                      this.tasks.push(obj);
                                       console.log("Valor válido");
                                     } else {
                                       console.log("Valor inválido");
@@ -53,9 +54,19 @@ export class HomePage {
     this.editService.edit();
   }
 
-  deleteTask() {
-    this.deleteService.delete();
+  deleteTask(id: number) {
+
+    const index = this.tasks.findIndex(task => task.id === id);
+  
+    if (index !== -1) {
+      // Remove o objeto com base no índice encontrado
+      this.tasks.splice(index, 1);
+      console.log(`Tarefa '${id}' removida com sucesso.`);
+    } else {
+      console.log(`Tarefa '${id}' não encontrada.`);
+    }
   }
+  
 
   concludeTask() {
     this.concludeService.conclude();

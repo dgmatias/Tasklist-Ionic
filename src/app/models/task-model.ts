@@ -1,6 +1,6 @@
 export interface TaskModel {
     
-    id?: number;
+    id: number;
     name: string;
     status: boolean;
 
