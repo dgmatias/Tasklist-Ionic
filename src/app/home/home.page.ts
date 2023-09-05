@@ -24,7 +24,7 @@ export class HomePage {
 
   tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
 
-  async alert(header: string, placeholder: string, buttonText: string, handler: any) {
+  async alert(header: string, placeholder: string, buttonText: string, handler: (task: string) => void) {
 
     const ALERT = await this.alertControler.create({
       header: header,
@@ -43,49 +43,13 @@ export class HomePage {
                 {
                  text: buttonText,
                  handler: (form)=>{
-                                    handler(form.task)
-                                  } 
-                },
-               ]
-    })
-
-    ALERT.present();
-
-  }
-
-  concluir(text: string) {
-
-    console.log(text)
-
-  }
-
-
-
-  async showAdd() {
-
-    const ALERT = await this.alertControler.create({
-      header: "Adicionar tarefa",
-      inputs: [
-                {
-                  name: "task",
-                  type: "text",
-                  checked: true,
-                  placeholder: "Digite o nome da tarefa",
-                }
-              ],
-      buttons: [
-                {
-                  text: "Cancelar",
-                },
-                {
-                 text: "Adicionar",
-                 handler: (form)=>{
                                     if(form.task) {
-                                      let obj = {id: this.tasks.length , name: form.task, status: false};
-                                      this.tasks.push(obj);
-                                      console.log("Valor válido");
+                                      console.log("dentro do alert " + form.task);
+                                      handler(form.task);
+                                      // this.tasks.push(handler(form.task, false));
+                                      console.log("Depois da função");
                                     } else {
-                                      console.log("Valor inválido");
+                                      console.log("valor inválido")
                                     }
                                   } 
                 },
@@ -96,14 +60,18 @@ export class HomePage {
 
   }
 
-  
+  addTask(task: string) {
+    
+    let obj: TaskModel = {id: this.getId(this.tasks),name: task, status: false};
 
+    this.tasks.push(obj);
 
+  }
 
-
-
-
-
+  getId(data: TaskModel[]): number {
+    let id: number = (data.length) + 1; 
+    return id
+  }
 
   editTask() {
     this.editService.edit();
