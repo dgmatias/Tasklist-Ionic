@@ -13,12 +13,55 @@ import { TaskModel } from '../models/task-model';
 })
 export class HomePage {
 
-  constructor(private addService: AddService, private editService: EditService, private deleteService: DeleteService, private concludeService: ConcludeService, private alertControler: AlertController) {}
+  constructor
+  (
+    private addService: AddService, 
+    private editService: EditService, 
+    private deleteService: DeleteService, 
+    private concludeService: ConcludeService, 
+    private alertControler: AlertController
+  ) {}
 
-  tasks: TaskModel[] = []
+  tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
+
+  async alert(header: string, placeholder: string, buttonText: string, handler: any) {
+
+    const ALERT = await this.alertControler.create({
+      header: header,
+      inputs: [
+                {
+                  name: "task",
+                  type: "text",
+                  checked: true,
+                  placeholder: placeholder,
+                }
+              ],
+      buttons: [
+                {
+                  text: "Cancelar",
+                },
+                {
+                 text: buttonText,
+                 handler: (form)=>{
+                                    handler(form.task)
+                                  } 
+                },
+               ]
+    })
+
+    ALERT.present();
+
+  }
+
+  concluir(text: string) {
+
+    console.log(text)
+
+  }
 
 
-  async showAlert() {
+
+  async showAdd() {
 
     const ALERT = await this.alertControler.create({
       header: "Adicionar tarefa",
@@ -32,6 +75,9 @@ export class HomePage {
               ],
       buttons: [
                 {
+                  text: "Cancelar",
+                },
+                {
                  text: "Adicionar",
                  handler: (form)=>{
                                     if(form.task) {
@@ -42,13 +88,22 @@ export class HomePage {
                                       console.log("Valor inválido");
                                     }
                                   } 
-                }
+                },
                ]
     })
 
     ALERT.present();
 
   }
+
+  
+
+
+
+
+
+
+
 
   editTask() {
     this.editService.edit();
@@ -58,13 +113,9 @@ export class HomePage {
 
     const index = this.tasks.findIndex(task => task.id === id);
   
-    if (index !== -1) {
       // Remove o objeto com base no índice encontrado
       this.tasks.splice(index, 1);
       console.log(`Tarefa '${id}' removida com sucesso.`);
-    } else {
-      console.log(`Tarefa '${id}' não encontrada.`);
-    }
   }
   
 

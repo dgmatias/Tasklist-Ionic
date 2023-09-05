@@ -16,13 +16,15 @@
 
     <ion-item-sliding *ngFor="let task of tasks">
       <ion-item>
-        <ion-label>{{task.name}} {{task.id}} </ion-label>
+        <ion-label>{{task.name}} </ion-label>
         <ion-icon slot="end" name="ellipse-outline"></ion-icon>
       </ion-item>
   
       <ion-item-options>
-        <ion-item-option (click)="editTask()">Editar </ion-item-option>
-        <ion-item-option (click)="deleteTask(task.id)" color="danger">Deletar</ion-item-option>
+
+        <ion-item-option (click)="alert('testeHeader', 'testePlaceHolder', 'testeButton', concluir)" color="success"><ion-icon  name="checkmark-outline"></ion-icon></ion-item-option>
+        <ion-item-option (click)="editTask()"><ion-icon name="pencil-outline"></ion-icon></ion-item-option>
+        <ion-item-option (click)="deleteTask(task.id)" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-item-option>
       </ion-item-options>
     </ion-item-sliding>    
     
@@ -30,7 +32,7 @@
 
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="showAlert()">
+    <ion-fab-button (click)="showAdd()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
