@@ -63,9 +63,14 @@ export class HomePage {
   
   // Função responsável por editar um atributo do objeto task.
 
-  // editTask(newName: string, task: TaskModel) {
-  //   this.editService.edit(newName, task);
-  // }
+  async editTask(task: TaskModel) {
+    const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar');
+
+    if(inputValue !== undefined) {
+      this.editService.edit(task, inputValue);
+    }
+
+  }
 
   // Função responsável por trocar o status do objeto task
 
