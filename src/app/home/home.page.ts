@@ -13,31 +13,47 @@ import { TaskModel } from '../models/task-model';
 })
 export class HomePage {
 
-  constructor(private addService: AddService, private editService: EditService, private deleteService: DeleteService, private concludeService: ConcludeService, private alertControler: AlertController) {}
+  constructor
+  (
+    private addService: AddService, 
+    private editService: EditService, 
+    private deleteService: DeleteService, 
+    private concludeService: ConcludeService, 
+    private alertControler: AlertController 
+    
+  ) {}
+
+  //Função anonima <ion-fab-button (click)="alert('Adicionar tarefa', 'Digite o nome da tarefa', 'Adicionar', (name) => addTask(name) )">
+
+
 
   tasks: TaskModel[] = []
 
+  // Função responsável por criar e exibir um Alert. com o parâmetros headerText, placeholderText e buttonText será possível atribuir valores as propriedades do objeto  do Alert e com o parâmetro callback será possível atribuir uma função a propriedade handler ao objeto do Alert.
 
-  async showAlert() {
+  async showAlert(headerText: string, placeholderText: string, buttonText: string, callback: any) {
 
     const ALERT = await this.alertControler.create({
-      header: "Adicionar tarefa",
+      header: headerText,
       inputs: [
                 {
                   name: "task",
                   type: "text",
                   checked: true,
-                  placeholder: "Digite o nome da tarefa",
+                  placeholder: placeholderText,
                 }
               ],
       buttons: [
                 {
-                 text: "Adicionar",
+                  text: "Cencelar",
+                  handler: ()=>{console.log("Ação cancelada")}
+                },
+                {
+                 text: buttonText,
                  handler: (form)=>{
                                     if(form.task) {
-                                      let obj = {id: this.tasks.length , name: form.task, status: false};
-                                      this.tasks.push(obj);
                                       console.log("Valor válido");
+                                      callback(form.task);
                                     } else {
                                       console.log("Valor inválido");
                                     }
@@ -50,9 +66,21 @@ export class HomePage {
 
   }
 
-  editTask() {
-    this.editService.edit();
+  // Função responsável por retornar um id.
+
+  getId(): number {
+    let id: number = (this.tasks.length) + 1;
+    return id;
   }
+
+  //Função responsável por adicionar um objeto ao array(tasks).
+
+  addTask(name: string, id: number = this.getId()) {
+    let obj = {id: id , name: name, status: false};
+    this.tasks.push(obj);
+  }
+
+  // Função responsável por retirar um objeto do array(tasks) com base no seu id.
 
   deleteTask(id: number) {
 
@@ -67,9 +95,12 @@ export class HomePage {
     }
   }
   
+  editTask(inputValue: string, task: TaskModel) {
+      console.log(`inputValue ${inputValue} task ${task.name}`);
+  }
 
   concludeTask() {
-    this.concludeService.conclude();
+    console.log("Tarefa concluida");
   }
 
 }
