@@ -23,15 +23,11 @@ export class HomePage {
     
   ) {}
 
-  //Função anonima <ion-fab-button (click)="alert('Adicionar tarefa', 'Digite o nome da tarefa', 'Adicionar', (name) => addTask(name) )">
-
-
-
   tasks: TaskModel[] = []
 
   // Função responsável por criar e exibir um Alert. com o parâmetros headerText, placeholderText e buttonText será possível atribuir valores as propriedades do objeto  do Alert e com o parâmetro callback será possível atribuir uma função a propriedade handler ao objeto do Alert.
 
-  async showAlert(headerText: string, placeholderText: string, buttonText: string, callback: any) {
+  async showAlert(headerText: string, placeholderText: string, buttonText: string, callback: any, task?: TaskModel) {
 
     const ALERT = await this.alertControler.create({
       header: headerText,
@@ -45,7 +41,7 @@ export class HomePage {
               ],
       buttons: [
                 {
-                  text: "Cencelar",
+                  text: "Cancelar",
                   handler: ()=>{console.log("Ação cancelada")}
                 },
                 {
@@ -53,7 +49,7 @@ export class HomePage {
                  handler: (form)=>{
                                     if(form.task) {
                                       console.log("Valor válido");
-                                      callback(form.task);
+                                      callback(form.task, task);
                                     } else {
                                       console.log("Valor inválido");
                                     }
@@ -75,28 +71,25 @@ export class HomePage {
 
   //Função responsável por adicionar um objeto ao array(tasks).
 
-  addTask(name: string, id: number = this.getId()) {
-    let obj = {id: id , name: name, status: false};
+  addTask(nameTask: string, idTask: number = this.getId()) {
+    let obj: TaskModel = {id: idTask , name: nameTask, status: false};
     this.tasks.push(obj);
   }
 
   // Função responsável por retirar um objeto do array(tasks) com base no seu id.
 
   deleteTask(id: number) {
-
     const index = this.tasks.findIndex(task => task.id === id);
   
-    if (index !== -1) {
-      // Remove o objeto com base no índice encontrado
-      this.tasks.splice(index, 1);
-      console.log(`Tarefa '${id}' removida com sucesso.`);
-    } else {
-      console.log(`Tarefa '${id}' não encontrada.`);
-    }
+    // Remove o objeto com base no índice encontrado
+    this.tasks.splice(index, 1);
+    console.log(`Tarefa '${id}' removida com sucesso.`);
   }
   
-  editTask(inputValue: string, task: TaskModel) {
-      console.log(`inputValue ${inputValue} task ${task.name}`);
+  // Função responsável por editar um atributo do array task.
+
+  editTask(newName: string, task: TaskModel) {
+    task.name = newName;
   }
 
   concludeTask() {
