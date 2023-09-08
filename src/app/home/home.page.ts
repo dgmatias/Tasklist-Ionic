@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { TaskModel } from '../models/task-model';
 
-import { AlertController } from '@ionic/angular';
+// import { AlertController } from '@ionic/angular';
 import { ChangeService } from '../services/change-service';
 import { AddService } from '../services/add-service';
 import { GetIdService } from '../services/getId-service';
 import { Injectable } from '@angular/core';
 import { DeleteService } from '../services/delete-service';
 import { EditService } from '../services/edit-service';
+import { AlertService } from '../services/alert-service';
 
 @Injectable({
   providedIn: 'root' // Especifica o escopo de injeção do serviço
@@ -27,50 +28,13 @@ export class HomePage {
     private addService: AddService,
     private deleteService: DeleteService,
     private editService: EditService,
-    private changeService: ChangeService,
-    private alertControler: AlertController 
-    
+    private changeService: ChangeService, 
+    private alertService: AlertService,
   ) {}
 
   tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
 
   // Função responsável por criar e exibir um Alert. com o parâmetros headerText, placeholderText e buttonText será possível atribuir valores as propriedades do objeto  do Alert, com o parâmetro callback será possível atribuir uma função a propriedade handler ao objeto do Alert.
-
-  async showAlert(headerText: string, placeholderText: string, buttonText: string, callback: any, task?: TaskModel) {
-
-    const ALERT = await this.alertControler.create({
-      header: headerText,
-      inputs: [
-                {
-                  name: "task",
-                  type: "text",
-                  checked: true,
-                  placeholder: placeholderText,
-                }
-              ],
-      buttons: [
-                {
-                  text: "Cancelar",
-                  handler: ()=>{console.log("Ação cancelada")}
-                },
-                {
-                 text: buttonText,
-                 handler: (form)=>{
-                                    if(form.task) {
-                                      console.log("Valor válido");
-                                      callback(form.task, task);
-                                    } else {
-                                      console.log("valor inválido")
-                                    }
-                                  } 
-                },
-               ]
-    })
-
-    ALERT.present();
-
-  }
-
   // Função responsável por retornar um id.
 
   getId(): number {
@@ -79,9 +43,17 @@ export class HomePage {
 
   //Função responsável por adicionar um objeto ao array(tasks).
 
-  addTask(nameTask: string, idTask: number = this.getIdService.get(this.tasks)) {
-    this.addService.add(nameTask, idTask, this.tasks);
+
+  async addTask() {
+    const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar');
+  
+    if (inputValue !== undefined) {
+      console.log(inputValue);
+      this.addService.add(inputValue, this.getId(), this.tasks);
+    }
   }
+  
+
 
   // Função responsável por retirar um objeto do array(tasks) com base no seu id.
 
@@ -91,9 +63,9 @@ export class HomePage {
   
   // Função responsável por editar um atributo do objeto task.
 
-  editTask(newName: string, task: TaskModel) {
-    this.editService.edit(newName, task);
-  }
+  // editTask(newName: string, task: TaskModel) {
+  //   this.editService.edit(newName, task);
+  // }
 
   // Função responsável por trocar o status do objeto task
 

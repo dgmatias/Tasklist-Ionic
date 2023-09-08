@@ -15,12 +15,13 @@ import { DeleteService } from './services/delete-service';
 import { ChangeService } from './services/change-service';
 import { GetIdService } from './services/getId-service';
 import { HomePage } from './home/home.page';
+import { AlertService } from './services/alert-service';
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AddService, EditService, DeleteService, ChangeService, GetIdService, HomePage],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AddService, EditService, DeleteService, ChangeService, GetIdService, AlertService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -7,7 +7,7 @@ import { TaskModel } from "../models/task-model";
 
 export class EditService {
 
-    edit(newName: string, task: TaskModel) {
+    edit(task: TaskModel, newName: string) {
         task.name = newName;
     }
 

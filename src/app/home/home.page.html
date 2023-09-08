@@ -24,7 +24,7 @@
       <ion-item-options>
         <ion-item-option *ngIf="task.status === false" (click)="changeStatus(task)" color="success"><ion-icon  name="checkmark-sharp"></ion-icon></ion-item-option>
         <ion-item-option *ngIf="task.status === true"  color="medium" (click)="changeStatus(task)"><ion-icon  name="close-sharp"></ion-icon></ion-item-option>
-        <ion-item-option color="dark" (click)="showAlert('Editar tarefa', 'Digite o nome de uma tarefa', 'Editar', this.editTask.bind(this), task)"><ion-icon name="pencil-sharp"></ion-icon> </ion-item-option>
+        <!-- <ion-item-option color="dark" (click)="showAlert('Editar tarefa', 'Digite o nome de uma tarefa', 'Editar')"><ion-icon name="pencil-sharp"></ion-icon> </ion-item-option> -->
         <ion-item-option (click)="deleteTask(task)" color="danger"><ion-icon name="trash-sharp"></ion-icon></ion-item-option>
       </ion-item-options>
     </ion-item-sliding>    
@@ -33,7 +33,7 @@
 
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="showAlert('Adicionar tarefa', 'Digite o nome de uma tarefa', 'Adicionar', this.addTask.bind(this))">
+    <ion-fab-button (click)="addTask()">
       <ion-icon name="add-sharp"></ion-icon>
     </ion-fab-button>
     
