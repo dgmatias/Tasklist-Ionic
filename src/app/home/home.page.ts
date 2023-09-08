@@ -6,6 +6,7 @@ import { ChangeService } from '../services/change-service';
 import { AddService } from '../services/add-service';
 import { GetIdService } from '../services/getId-service';
 import { Injectable } from '@angular/core';
+import { DeleteService } from '../services/delete-service';
 
 @Injectable({
   providedIn: 'root' // Especifica o escopo de injeção do serviço
@@ -21,8 +22,9 @@ export class HomePage {
 
   constructor
   (
-    private addService: AddService,
     private getIdService: GetIdService,
+    private addService: AddService,
+    private deleteService: DeleteService,
     private changeService: ChangeService,
     private alertControler: AlertController 
     
@@ -82,11 +84,7 @@ export class HomePage {
   // Função responsável por retirar um objeto do array(tasks) com base no seu id.
 
   deleteTask(task: TaskModel) {
-    const index = this.tasks.findIndex(task => task.id === task.id);
-  
-    // Remove o objeto com base no índice encontrado
-    this.tasks.splice(index, 1);
-    console.log(`Tarefa '${task.id}' removida com sucesso.`);
+    this.deleteService.delete(task, this.tasks);
   }
   
   // Função responsável por editar um atributo do objeto task.
