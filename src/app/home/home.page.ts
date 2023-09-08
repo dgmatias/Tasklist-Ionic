@@ -3,16 +3,26 @@ import { TaskModel } from '../models/task-model';
 
 import { AlertController } from '@ionic/angular';
 import { ChangeService } from '../services/change-service';
+import { AddService } from '../services/add-service';
+import { GetIdService } from '../services/getId-service';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root' // Especifica o escopo de injeção do serviço
+})
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+
 export class HomePage {
 
   constructor
   (
+    private addService: AddService,
+    private getIdService: GetIdService,
     private changeService: ChangeService,
     private alertControler: AlertController 
     
@@ -60,15 +70,13 @@ export class HomePage {
   // Função responsável por retornar um id.
 
   getId(): number {
-    let id: number = (this.tasks.length) + 1;
-    return id;
+    return this.getIdService.get(this.tasks);
   }
 
   //Função responsável por adicionar um objeto ao array(tasks).
 
-  addTask(nameTask: string, idTask: number = this.getId()) {
-    let obj: TaskModel = {id: idTask , name: nameTask, status: false};
-    this.tasks.push(obj);
+  addTask(nameTask: string, idTask: number = this.getIdService.get(this.tasks)) {
+    this.addService.add(nameTask, idTask, this.tasks);
   }
 
   // Função responsável por retirar um objeto do array(tasks) com base no seu id.
@@ -90,7 +98,6 @@ export class HomePage {
   // Função responsável por trocar o status do objeto task
 
   changeStatus(task: TaskModel) {
-    
     this.changeService.change(task);
   }
 
