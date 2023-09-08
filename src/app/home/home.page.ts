@@ -25,7 +25,7 @@ export class HomePage {
 
   tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
 
-  // Função responsável por criar e exibir um Alert. com o parâmetros headerText, placeholderText e buttonText será possível atribuir valores as propriedades do objeto  do Alert e com o parâmetro callback será possível atribuir uma função a propriedade handler ao objeto do Alert.
+  // Função responsável por criar e exibir um Alert. com o parâmetros headerText, placeholderText e buttonText será possível atribuir valores as propriedades do objeto  do Alert, com o parâmetro callback será possível atribuir uma função a propriedade handler ao objeto do Alert.
 
   async showAlert(headerText: string, placeholderText: string, buttonText: string, callback: any, task?: TaskModel) {
 
@@ -78,22 +78,25 @@ export class HomePage {
 
   // Função responsável por retirar um objeto do array(tasks) com base no seu id.
 
-  deleteTask(id: number) {
-    const index = this.tasks.findIndex(task => task.id === id);
+  deleteTask(task: TaskModel) {
+    const index = this.tasks.findIndex(task => task.id === task.id);
   
     // Remove o objeto com base no índice encontrado
     this.tasks.splice(index, 1);
-    console.log(`Tarefa '${id}' removida com sucesso.`);
+    console.log(`Tarefa '${task.id}' removida com sucesso.`);
   }
   
-  // Função responsável por editar um atributo do array task.
+  // Função responsável por editar um atributo do objeto task.
 
   editTask(newName: string, task: TaskModel) {
     task.name = newName;
   }
 
-  concludeTask() {
-    console.log("Tarefa concluida");
+  // Função responsável por trocar o status do objeto task
+
+  changeStatus(task: TaskModel) {
+    console.log(`O status da tarefa passou de ${task.status} para ${!task.status}`);
+    task.status = !task.status;
   }
 
 }
