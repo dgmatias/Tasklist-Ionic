@@ -23,7 +23,7 @@ export class HomePage {
     
   ) {}
 
-  tasks: TaskModel[] = []
+  tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
 
   // Função responsável por criar e exibir um Alert. com o parâmetros headerText, placeholderText e buttonText será possível atribuir valores as propriedades do objeto  do Alert e com o parâmetro callback será possível atribuir uma função a propriedade handler ao objeto do Alert.
 
@@ -51,10 +51,10 @@ export class HomePage {
                                       console.log("Valor válido");
                                       callback(form.task, task);
                                     } else {
-                                      console.log("Valor inválido");
+                                      console.log("valor inválido")
                                     }
                                   } 
-                }
+                },
                ]
     })
 
