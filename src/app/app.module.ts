@@ -12,13 +12,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AddService } from './services/add-service';
 import { EditService } from './services/edit-service';
 import { DeleteService } from './services/delete-service';
-import { ConcludeService } from './services/conclude-service';
+import { ChangeService } from './services/change-service';
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AddService, EditService, DeleteService, ConcludeService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AddService, EditService, DeleteService, ChangeService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

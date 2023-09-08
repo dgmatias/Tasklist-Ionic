@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { AddService } from '../services/add-service';
-import { EditService } from '../services/edit-service';
-import { DeleteService } from '../services/delete-service';
-import { ConcludeService } from '../services/conclude-service';
-import { AlertController } from '@ionic/angular';
 import { TaskModel } from '../models/task-model';
+
+import { AlertController } from '@ionic/angular';
+import { ChangeService } from '../services/change-service';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +13,7 @@ export class HomePage {
 
   constructor
   (
-    private addService: AddService, 
-    private editService: EditService, 
-    private deleteService: DeleteService, 
-    private concludeService: ConcludeService, 
+    private changeService: ChangeService,
     private alertControler: AlertController 
     
   ) {}
@@ -95,8 +90,8 @@ export class HomePage {
   // Função responsável por trocar o status do objeto task
 
   changeStatus(task: TaskModel) {
-    console.log(`O status da tarefa passou de ${task.status} para ${!task.status}`);
-    task.status = !task.status;
+    
+    this.changeService.change(task);
   }
 
 }
