@@ -7,6 +7,7 @@ import { AddService } from '../services/add-service';
 import { GetIdService } from '../services/getId-service';
 import { Injectable } from '@angular/core';
 import { DeleteService } from '../services/delete-service';
+import { EditService } from '../services/edit-service';
 
 @Injectable({
   providedIn: 'root' // Especifica o escopo de injeção do serviço
@@ -25,6 +26,7 @@ export class HomePage {
     private getIdService: GetIdService,
     private addService: AddService,
     private deleteService: DeleteService,
+    private editService: EditService,
     private changeService: ChangeService,
     private alertControler: AlertController 
     
@@ -90,7 +92,7 @@ export class HomePage {
   // Função responsável por editar um atributo do objeto task.
 
   editTask(newName: string, task: TaskModel) {
-    task.name = newName;
+    this.editService.edit(newName, task);
   }
 
   // Função responsável por trocar o status do objeto task
