@@ -34,13 +34,13 @@ export class HomePage {
     private alertService: AlertService,
   ) {
     
-    const arrayJson = localStorage.getItem('db.json');
+    const arrayJson = localStorage.getItem('dbJson');
 
     if(arrayJson) {
-      console.log(arrayJson);
       this.tasks = JSON.parse(arrayJson);
+      console.log(this.tasks);
     }
-
+    
   }
   
   // Função responsável por retornar um Id com base em um array.
