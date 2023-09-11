@@ -8,9 +8,11 @@ import { TaskModel } from "../models/task-model";
 })
 export class GetIdService {
 
-  get(data: TaskModel[]): number {
-    let id: number = (data.length) + 1;
-    return id;
+  //Método responvável por retornar um Id com base no tamanho de um array.
+
+  get(array: TaskModel[]): number { 
+    let id: number = (array.length) + 1; //a variável id recebe o valor do tamanho do array + 1 
+    return id; //a função retorna a variável id
   }
   
 }

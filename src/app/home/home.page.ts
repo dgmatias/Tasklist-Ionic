@@ -46,41 +46,38 @@ export class HomePage {
   // Função responsável por retornar um Id com base em um array.
 
   getId(): number {
-    return this.getIdService.get(this.tasks);
+    return this.getIdService.get(this.tasks); //é chamado o método get.
   }
 
-  //Função responsável por adicionar um objeto ao array(tasks).
+  //Função responsável criar uma tarefa.
 
   async addTask() {
-    const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar');
+
+    const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar'); //É criada a const inputValue, ela recebe o return do método alert, que pode ser o valor digitado pelo input do alert caso o valor seja confirmado, ou pode ser um valor undefined caso não seja confirmado
   
-    if (inputValue !== undefined) {
-      this.addService.add(inputValue, this.getId(), this.tasks);
-      localStorage.setItem('dbJson', JSON.stringify(this.tasks));
+    if (inputValue !== undefined) { //verifica se o return do alert foi diferente de undefined
+      this.addService.add(inputValue, this.getId(), this.tasks); //é chamado o método add
+
+      localStorage.setItem('dbJson', JSON.stringify(this.tasks)); //setItem adiciona o array em forma de objeto json no Local Storage
     }
   }
 
   // Função responsável por retirar um objeto do array(tasks) com base no seu id.
 
   deleteTask(task: TaskModel) {
-    this.deleteService.delete(task, this.tasks);
-    let key: string | null = localStorage.key(0);
-    if(key) {
-      localStorage.setItem(key, JSON.stringify(this.tasks));    
-    }
+    this.deleteService.delete(task, this.tasks); //é chamado a função delete
+    localStorage.setItem('dbJson' , JSON.stringify(this.tasks)); //Atualiza o Local Storage adicionando o novo array.
   }
   
   // Função responsável por editar um atributo do objeto task.
 
   async editTask(task: TaskModel) {
-    const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar');
+    const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar');//É criada a const inputValue, ela recebe o return do método alert, que pode ser o valor digitado pelo input do alert caso o valor seja confirmado, ou pode ser um valor undefined caso não seja confirmado
 
     if(inputValue !== undefined) {
-      this.editService.edit(task, inputValue);
-      let key: string | null = localStorage.key(0);
-      if(key) {
-      localStorage.setItem(key, JSON.stringify(this.tasks));    
-      }
+      this.editService.edit(task, inputValue); //É chamado o método edit
+
+      localStorage.setItem('dbJson', JSON.stringify(this.tasks)); //Atualiza o Local Storage adicionando o novo array.    
     }
 
   }
@@ -88,7 +85,7 @@ export class HomePage {
   // Função responsável por trocar o status do objeto task
 
   changeStatus(task: TaskModel) {
-    this.changeService.change(task);
+    this.changeService.change(task); //é chamado o método change
   }
 
 }
