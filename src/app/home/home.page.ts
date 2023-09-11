@@ -34,15 +34,13 @@ export class HomePage {
 
   tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
 
-  // Função responsável por criar e exibir um Alert. com o parâmetros headerText, placeholderText e buttonText será possível atribuir valores as propriedades do objeto  do Alert, com o parâmetro callback será possível atribuir uma função a propriedade handler ao objeto do Alert.
-  // Função responsável por retornar um id.
+  // Função responsável por retornar um Id com base em um array.
 
   getId(): number {
     return this.getIdService.get(this.tasks);
   }
 
   //Função responsável por adicionar um objeto ao array(tasks).
-
 
   async addTask() {
     const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar');
@@ -52,8 +50,6 @@ export class HomePage {
       this.addService.add(inputValue, this.getId(), this.tasks);
     }
   }
-  
-
 
   // Função responsável por retirar um objeto do array(tasks) com base no seu id.
 
