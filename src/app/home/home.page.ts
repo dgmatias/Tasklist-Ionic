@@ -22,6 +22,8 @@ import { AlertService } from '../services/alert-service';
 
 export class HomePage {
 
+  tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
+
   constructor
   (
     private getIdService: GetIdService,
@@ -30,10 +32,17 @@ export class HomePage {
     private editService: EditService,
     private changeService: ChangeService, 
     private alertService: AlertService,
-  ) {}
+  ) {
+    
+    const arrayJson = localStorage.getItem('db.json');
 
-  tasks: TaskModel[] = [] //Array responsável pelo "banco de dados"
+    if(arrayJson) {
+      console.log(arrayJson);
+      this.tasks = JSON.parse(arrayJson);
+    }
 
+  }
+  
   // Função responsável por retornar um Id com base em um array.
 
   getId(): number {
@@ -46,8 +55,8 @@ export class HomePage {
     const inputValue: string | undefined = await this.alertService.alert('Adicionar Tarefa', 'Digite o nome da tarefa', 'Adicionar');
   
     if (inputValue !== undefined) {
-      console.log(inputValue);
       this.addService.add(inputValue, this.getId(), this.tasks);
+      localStorage.setItem('dbJson', JSON.stringify(this.tasks));
     }
   }
 
@@ -55,6 +64,10 @@ export class HomePage {
 
   deleteTask(task: TaskModel) {
     this.deleteService.delete(task, this.tasks);
+    let key: string | null = localStorage.key(0);
+    if(key) {
+      localStorage.setItem(key, JSON.stringify(this.tasks));    
+    }
   }
   
   // Função responsável por editar um atributo do objeto task.
@@ -64,6 +77,10 @@ export class HomePage {
 
     if(inputValue !== undefined) {
       this.editService.edit(task, inputValue);
+      let key: string | null = localStorage.key(0);
+      if(key) {
+      localStorage.setItem(key, JSON.stringify(this.tasks));    
+      }
     }
 
   }
