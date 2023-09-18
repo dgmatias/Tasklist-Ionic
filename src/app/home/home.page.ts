@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { DeleteService } from '../services/delete-service';
 import { EditService } from '../services/edit-service';
 import { AlertService } from '../services/alert-service';
+import { GetTaskService } from '../services/getTasks-service';
 
 @Injectable({
   providedIn: 'root' // Especifica o escopo de injeção do serviço
@@ -32,17 +33,15 @@ export class HomePage {
     private editService: EditService,
     private changeService: ChangeService, 
     private alertService: AlertService,
+    private getTaskService: GetTaskService
   ) {
-    
-    const arrayJson = localStorage.getItem('dbJson');
-
-    if(arrayJson) {
-      this.tasks = JSON.parse(arrayJson);
-      console.log(this.tasks);
-    }
     
   }
   
+  ngOnInit() {
+    this.getTaskService.getTasks().subscribe(task => this.tasks = task);
+  }
+
   // Função responsável por retornar um Id com base em um array.
 
   getId(): number {
@@ -87,5 +86,7 @@ export class HomePage {
   changeStatus(task: TaskModel) {
     this.changeService.change(task); //é chamado o método change
   }
+
+
 
 }
